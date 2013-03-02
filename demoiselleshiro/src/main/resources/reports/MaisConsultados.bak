@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="MaisConsultados"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="573"
+		 columnSpacing="0"
+		 leftMargin="11"
+		 rightMargin="11"
+		 topMargin="11"
+		 bottomMargin="11"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="datagerado" isForPrompting="false" class="java.util.Date"/>
+	<parameter name="tipoRelatorio" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="dataInicio" isForPrompting="false" class="java.util.Date"/>
+	<parameter name="dataFim" isForPrompting="false" class="java.util.Date"/>
+	<queryString><![CDATA[SELECT distinct(ERRORCODE) as errocode,
+(SELECT distinct(x.systemcode) FROM logger x WHERE x.systemcode = l.systemcode AND l.errorcode = x.errorcode) as sistema
+,(SELECT COUNT(x.ID) FROM logger x WHERE l.ERRORCODE = x.ERRORCODE) as quantidadeConsultas FROM logger l WHERE ERRORCODE != 0 ORDER BY quantidadeConsultas desc;]]></queryString>
+
+	<field name="errorCode" class="java.lang.String"/>
+	<field name="systemCode" class="java.lang.String"/>
+	<field name="counterSearch" class="java.lang.Long"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="74"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="2"
+						y="7"
+						width="142"
+						height="30"
+						key="staticText-1"
+						isPrintInFirstWholeBand="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" size="18"/>
+					</textElement>
+				<text><![CDATA[Banco de Erros]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="60"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="2"
+						y="1"
+						width="71"
+						height="16"
+						key="staticText-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Gerado em:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="2"
+						y="17"
+						width="105"
+						height="16"
+						key="staticText-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Tipo de Relatorio:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy HH:mm:ss" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="73"
+						y="1"
+						width="187"
+						height="16"
+						key="textField"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$P{datagerado}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="107"
+						y="17"
+						width="372"
+						height="16"
+						key="textField"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{tipoRelatorio}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="2"
+						y="33"
+						width="71"
+						height="16"
+						key="staticText-7"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Peíodo de:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="73"
+						y="33"
+						width="76"
+						height="16"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$P{dataInicio}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="151"
+						y="33"
+						width="8"
+						height="16"
+						key="staticText-8"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<text><![CDATA[à]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="162"
+						y="33"
+						width="68"
+						height="16"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$P{dataFim}]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="18"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="3"
+						y="4"
+						width="92"
+						height="14"
+						key="staticText-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Codigo Sistema]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="122"
+						y="4"
+						width="100"
+						height="14"
+						key="staticText-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Codigo Erro]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="309"
+						y="4"
+						width="139"
+						height="14"
+						key="staticText-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Numero de Consultas]]></text>
+				</staticText>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="16"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="122"
+						y="0"
+						width="150"
+						height="16"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{errorCode}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="3"
+						y="0"
+						width="82"
+						height="16"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{systemCode}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="309"
+						y="0"
+						width="113"
+						height="16"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$F{counterSearch}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="30"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="50"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<lastPageFooter>
+			<band height="50"  isSplitAllowed="true" >
+			</band>
+		</lastPageFooter>
+		<summary>
+			<band height="50"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:shiro="http://shiro.apache.org/tags">
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="#{messages['menu.search']}" url="/consulta.jsf" />
+			<shiro:hasPermission name="erros">
+				<p:submenu label="#{messages['menu.erros']}">
+					<shiro:hasPermission name="erros_inserir">
+						<p:menuitem value="#{messages['menu.erros.new']}"
+							url="/erros_edit.jsf" />
+					</shiro:hasPermission>
+					<shiro:hasPermission name="erros_acessar">
+						<p:menuitem value="#{messages['menu.erros.list']}"
+							url="/erros_list.jsf" />
+					</shiro:hasPermission>
+				</p:submenu>
+			</shiro:hasPermission>
+			<shiro:hasPermission name="sistemas">
+				<p:submenu label="#{messages['menu.sistemas']}">
+					<shiro:hasPermission name="Sistemas_inserir">
+						<p:menuitem value="#{messages['menu.usuarios.new']}"
+							url="/sistemas_edit.jsf" />
+					</shiro:hasPermission>
+					<shiro:hasPermission name="Sistemas_acessar">
+						<p:menuitem value="#{messages['menu.usuarios.list']}"
+							url="/sistemas_list.jsf" />
+					</shiro:hasPermission>
+				</p:submenu>
+			</shiro:hasPermission>
+			<shiro:hasPermission name="usuarios">
+				<p:submenu label="#{messages['menu.usuarios']}">
+					<shiro:hasPermission name="Usuarios_inserir">
+						<p:menuitem value="#{messages['menu.usuarios.new']}"
+							url="/usuarios_edit.jsf" />
+					</shiro:hasPermission>
+					<shiro:hasPermission name="Usuarios_acessar">
+						<p:menuitem value="#{messages['menu.usuarios.list']}"
+							url="/usuarios_list.jsf" />
+					</shiro:hasPermission>
+				</p:submenu>
+			</shiro:hasPermission>
+			<shiro:hasPermission name="perfis">
+				<p:submenu label="#{messages['menu.perfis']}">
+					<shiro:hasPermission name="Perfis_inserir">
+						<p:menuitem value="#{messages['menu.perfis.new']}"
+							url="/perfis_edit.jsf" />
+					</shiro:hasPermission>
+					<shiro:hasPermission name="Perfis_acessar">
+						<p:menuitem value="#{messages['menu.perfis.list']}"
+							url="/perfis_list.jsf" />
+					</shiro:hasPermission>
+				</p:submenu>
+			</shiro:hasPermission>
+			<shiro:hasPermission name="relatorios">
+				<p:submenu label="#{messages['menu.relatorios']}">
+					<shiro:hasPermission name="Relatorios_acessar">
+						<p:menuitem value="#{messages['menu.relatorios.logsconsultas']}"
+							url="/relatorios_logs.jsf" />
+					</shiro:hasPermission>
+					<shiro:hasPermission name="Relatorios_acessar">
+						<p:menuitem value="#{messages['menu.relatorios.acoes']}"
+							url="/relatorios_acoes.jsf" />
+					</shiro:hasPermission>
+				</p:submenu>
+			</shiro:hasPermission>
+			<p:menuitem value="#{messages['menu.menuitem.quit']}"
+				rendered="#{loginMB.logged}" action="#{loginMB.sair}" ajax="false" />
+		</p:menubar>
+	</h:form>
+</ui:composition>

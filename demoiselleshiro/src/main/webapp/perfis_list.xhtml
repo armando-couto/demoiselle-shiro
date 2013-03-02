@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+		<p:outputPanel id="messagePanel">
+			<p:messages />
+		</p:outputPanel>
+		<h:form id="formCadastroPerfil" prependId="false">
+
+			<p:dataTable id="dataTablePerfis" value="#{perfisListMB.resultList}"
+				var="perfis" style="width:800px;margin: 0 auto;">
+				<f:facet name="header">
+					<h:outputText value="#{messages['perfis.list.title']}" />
+				</f:facet>
+				<p:column
+					headerText="#{messages['perfis.list.column.header.perfil']}">
+					<h:outputText value="#{perfis.perfil}" />
+				</p:column>
+				<p:column
+					headerText="#{messages['perfis.list.column.header.actions']}"
+					style="text-align:center; width: 120px;">
+					<p:commandButton title="#{messages['button.edit']}"
+						image="ui-icon-pencil" action="#{perfisListMB.getNextView}"
+						label="#{messages['button.edit']}" ajax="false">
+						<f:param name="id" value="#{perfis.id}" />
+					</p:commandButton>
+					<p:commandButton title="#{messages['button.delete']}"
+						image="ui-icon-close" onclick="confirmation.show()"
+						label="#{messages['button.delete']}">
+						<f:setPropertyActionListener value="#{perfis.id}"
+							target="#{perfisListMB.idToDelete}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog id="confirmDialog"
+				message="#{messages['confirm.delete']}" modal="true"
+				draggable="false" header="Aviso" severity="alert"
+				widgetVar="confirmation">
+				<p:commandButton id="confirm"
+					value="#{messages['confirm.delete.yes']}"
+					action="#{perfisListMB.delete}"
+					actionListener="#{perfisListMB.clear}"
+					oncomplete="confirmation.hide()"
+					update="formCadastroPerfil messagePanel" />
+				<p:commandButton id="decline"
+					value="#{messages['confirm.delete.no']}"
+					onclick="confirmation.hide()" type="button" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

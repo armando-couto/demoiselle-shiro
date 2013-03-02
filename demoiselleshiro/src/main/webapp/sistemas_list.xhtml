@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+			<h:form id="formListSistemas">
+				<p:messages />
+				<p:dataTable id="list" var="bean" style="margin: 0 auto;width:80%" value="#{sistemasListMB.resultList}" >
+					<f:facet name="header"><h:outputText value="#{messages['sistemas.list.title']}" /></f:facet>
+					<p:column style="width:30px;text-align:center;">
+						<f:facet name="header"><h:outputText value="#{messages['sistemas.list.table.header.id']}" /></f:facet>
+						<h:outputText value="#{bean.id}" />
+					</p:column>
+					<p:column style="width:50px;text-align:center;">
+						<f:facet name="header"><h:outputText value="#{messages['sistemas.list.table.header.code']}" /></f:facet>
+						<h:outputText value="#{bean.codigo}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header"><h:outputText value="#{messages['sistemas.list.table.header.description']}" /></f:facet>
+						<h:outputText value="#{bean.descricao}" />
+					</p:column>
+					<p:column style="width:80px; text-align: center">
+						<f:facet name="header"><h:outputText value="#{messages['table.actioncolumn']}" /></f:facet>
+						<p:commandButton ajax="false"
+							action="#{sistemasListMB.getNextView}" image="ui-icon-pencil"
+							actionListener="#{sistemasListMB.clear}">
+							<f:param name="id" value="#{bean.id}" />
+						</p:commandButton>
+						<p:commandButton onclick="confirmation.show()" title="Deletar"  image="ui-icon-close">
+							<f:setPropertyActionListener target="#{sistemasListMB.id_sistema}" value="#{bean.id}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+				
+				<p:confirmDialog id="confirmDialog" message="#{messages['confirm.delete']}" modal="true"  draggable="false"
+                header="Aviso" severity="alert" widgetVar="confirmation">  
+                  
+			        <p:commandButton id="confirm" value="#{messages['confirm.delete.yes']}" action="#{sistemasListMB.delete}"
+			        			 actionListener="#{sistemasListMB.clear}" oncomplete="confirmation.hide()"  
+			                     update="formListSistemas" />  
+			        <p:commandButton id="decline" value="#{messages['confirm.delete.no']}" onclick="confirmation.hide()" type="button" />   
+			                  
+			    </p:confirmDialog>
+			</h:form>
+	</ui:define>
+</ui:composition>

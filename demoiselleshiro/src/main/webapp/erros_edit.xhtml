@@ -1,0 +1,125 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+		<style>
+.teste {
+	
+}
+
+.teste td {
+	vertical-align: top;
+}
+</style>
+		<p:fieldset legend="#{messages['erros.edit.title']}"
+			toggleable="false" style="width:640px;margin: 0 auto;"
+			styleClass="teste">
+			<h:form id="formCadastroErros" prependId="false"
+				style="display:inline;">
+
+				<h:inputHidden id="erroid" value="#{errosEditMB.bean.id}"
+					rendered="#{errosEditMB.updateMode}" />
+
+				<h:panelGrid id="fields" columns="3">
+					<h:outputLabel value="#{messages['erros.edit.label.sistemacode']}"
+						for="selectSistema" />
+					<h:panelGroup style="position:relative" id="teste">
+						<h:selectOneMenu id="selectSistema" value="#{errosEditMB.sistema}"
+							disabled="#{errosEditMB.updateMode}"
+							required="#{!errosEditMB.updateMode}" valueChangeListener="#{errosEditMB.valueChange}"
+							style="display:block;float:left;"
+							requiredMessage="#{validations['erros.sistema.required']}">
+							<f:selectItem itemLabel="Selecione..." itemValue="" />
+							<f:selectItems value="#{sistemasListMB.resultList}"
+								var="sistemas" itemLabel="#{sistemas.codigo}" 
+								itemValue="#{sistemas}"  />
+										<f:ajax execute="@this" render="selectSistema botaoInsert codigo teste" immediate="true"/>						
+						</h:selectOneMenu>
+						<div style="position:relative;display: inline; float: left;">
+								<p:message for="selectSistema" />
+						</div>
+					</h:panelGroup>
+					<span></span>
+
+					<h:outputLabel value="#{messages['erros.edit.label.code']}: "
+						for="codigo" styleClass="text-input" />
+					<h:panelGroup style="position:relative">
+						<p:inputText id="codigo" value="#{errosEditMB.bean.codigo}"
+							size="5" title="#{messages['erros.edit.alt.code']}" maxlength="4"
+							validator="#{errosValidator.validateCodigo}" required="true"
+							converter="codigoErroConveter" 
+							requiredMessage="#{validations['erros.code.required']}"
+							style="display:block;float:left;" />
+						<div style="display: inline; float: left;">
+							<p:message for="codigo" />
+						</div>
+					</h:panelGroup>
+					<span></span>
+
+					<h:outputLabel value="#{messages['erros.edit.label.descricao']}: "
+						for="descricao" styleClass="text-input" />
+					<p:inputText id="descricao" size="60"
+						value="#{errosEditMB.bean.descricao}"
+						title="#{messages['erros.edit.alt.descricao']}" required="true"
+						validator="#{errosValidator.validateDescricao}"
+						requiredMessage="#{validations['erros.descricao.required']}" />
+					<h:panelGroup style="position:relative">
+						<div style="position: absolute; width: 300px;">
+							<p:message for="descricao" />
+						</div>
+					</h:panelGroup>
+
+					<h:outputLabel value="#{messages['erros.edit.label.razao']}: "
+						for="razao" styleClass="text-input" />
+					<p:editor id="razao" value="#{errosEditMB.bean.razao}" width="512" 
+					required="true" requiredMessage="#{validations['erros.razao.required']}"
+					validator="#{errosValidator.validateRazao}" />
+					<h:panelGroup style="position:relative">
+						<div style="position: absolute; width: 300px;">
+							<p:message for="razao" />
+						</div>
+					</h:panelGroup>
+
+					<h:outputLabel value="#{messages['erros.edit.label.acao']}: "
+						for="acao" styleClass="text-input" />
+					<p:editor id="acao" value="#{errosEditMB.bean.acao}" width="512"
+					 required="true" requiredMessage="#{validations['erros.acao.required']}"
+					 validator="#{errosValidator.validateAcao}"
+					  />
+					<h:panelGroup style="position:relative">
+						<div style="position: absolute; width: 300px;">
+							<p:message for="acao" />
+						</div>
+					</h:panelGroup>
+
+					<h:outputLabel
+						value="#{messages['erros.edit.label.observacoes']}: "
+						for="observacoes" styleClass="text-input" />
+					<p:inputTextarea id="observacoes" style="width:517px;height:70px"
+						autoResize="false"
+						title="#{messages['erros.edit.alt.observacoes']}"
+						value="#{errosEditMB.bean.observacoes}" />
+					<p:message for="observacoes" />
+				</h:panelGrid>
+				<div style="clear: both"></div>
+				<p:commandButton id="botaoInsert" action="#{errosEditMB.insert}" value="#{messages['form.insert']}"
+					ajax="false" style="float:left;margin: 5px 5px 3px 410px;" rendered="#{!errosEditMB.updateMode}">
+					<f:param name="parameterSistema" value="#{errosEditMB.sistema.id}" />
+				</p:commandButton>
+				<p:commandButton id="botaoUpdate" action="#{errosEditMB.update}" value="#{messages['form.update']}"
+					ajax="false" style="float:left;margin: 5px 5px 3px 400px;"  rendered="#{errosEditMB.updateMode}">
+					<f:param name="parameterSistema" value="#{errosEditMB.sistema.id}" />
+				</p:commandButton>
+				<p:commandButton style="float:left;margin: 5px 0 3px 0;"
+					action="/erros_list.jsf" value="Cancelar" ajax="false" immediate="true" >
+					<f:param name="parameterSistema" value="#{errosEditMB.sistema.id}" />
+				</p:commandButton>
+			</h:form>
+		</p:fieldset>		
+		
+	</ui:define>
+</ui:composition>

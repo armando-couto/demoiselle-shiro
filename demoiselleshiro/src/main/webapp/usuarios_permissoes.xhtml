@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+		<style>
+.text-input{
+	font-weight: bold;
+}
+</style>
+
+		<h:form id="formCadastroUsuario" prependId="false">
+
+			<p:fieldset legend="#{messages['usuarios.permissions.form.title']}"
+				toggleable="false" style="width:800px;margin:0 auto;">
+				<h:panelGrid id="fields" columns="2">
+					<h:outputLabel 
+						value="#{messages['usuarios.edit.form.username.label']}: "
+						for="username" styleClass="text-input" />
+					<h:outputText id="username"
+						value="#{usuariosPermissoesMB.bean.username}" />
+
+					<h:outputLabel
+						value="#{messages['usuarios.edit.form.userlogin.label']}: "
+						for="userlogin" styleClass="text-input" />
+					<h:outputText id="userlogin"
+						value="#{usuariosEditMB.bean.userlogin}" />
+
+				</h:panelGrid>
+				<p:dataTable value="#{usuariosPermissoesMB.perfis}" var="perfis"
+					selection="#{usuariosPermissoesMB.selectedPerfis}">
+					<p:column selectionMode="multiple" style="width:18px"  />
+					<p:column headerText="Perfil">
+						<h:outputText value="#{perfis.perfil}" />
+					</p:column>
+					<p:column headerText="Ver Permissões" style="text-align:center; width: 120px;">
+						<p:commandButton title="" image="ui-icon-search"
+							oncomplete="perfisDialog.show()" update="showInfo entidades">
+							<f:setPropertyActionListener value="#{perfis}"
+								target="#{usuariosPermissoesMB.selectedPefil}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+				<p:commandButton action="#{usuariosPermissoesMB.update}"
+					value="Salvar" ajax="false" />
+			</p:fieldset>
+
+			<p:dialog header="Detalhes do Perfil" widgetVar="perfisDialog"
+				resizable="false" width="800" id="perfilDialog" showEffect="fade"
+				hideEffect="fade" modal="true">
+				<p:dataTable id='entidades'
+					value="#{usuariosPermissoesMB.listaEntidades}" var="entidade"
+					emptyMessage="#{messages['perfis.entity.empty']}">
+					<f:facet name="header">
+						<h:outputText value="#{usuariosPermissoesMB.selectedPefil.perfil}" />
+					</f:facet>
+					<p:column headerText="Entidades"
+						style="width:150px;text-align: left">
+						<h:outputText value="#{entidade.nome}" />
+					</p:column>
+					<p:column headerText="Permissões">
+						<h:selectManyCheckbox
+							value="#{usuariosPermissoesMB.listaPermissoes}" disabled="true">
+							<f:selectItem itemValue="#{entidade.nome}_inserir"
+								itemLabel="Inserir" />
+							<f:selectItem itemValue="#{entidade.nome}_alterar"
+								itemLabel="Atualizar" />
+							<f:selectItem itemValue="#{entidade.nome}_acessar"
+								itemLabel="Acessar" />
+							<f:selectItem itemValue="#{entidade.nome}_deletar"
+								itemLabel="Deletar" />
+						</h:selectManyCheckbox>
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

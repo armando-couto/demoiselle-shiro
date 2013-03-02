@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>br.tjce</groupId>
+	<artifactId>demoiselleshiro</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<name></name>
+	<description></description>
+	<url></url>
+
+	<parent>
+		<groupId>br.gov.frameworkdemoiselle</groupId>
+		<artifactId>demoiselle-jsf-parent</artifactId>
+		<version>2.2.1</version>
+	</parent>
+	
+	<properties>
+		<shiro.version>1.2.0</shiro.version>
+	</properties>
+	
+	 <build>
+	    <plugins>
+	        <plugin>
+	            <!-- eliminate [WARNING] Using platform encoding... build is platform
+	                dependent! -->
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-resources-plugin</artifactId>
+	                <configuration>
+	                    <nonFilteredFileExtensions>
+	                        <nonFilteredFileExtension>jasper</nonFilteredFileExtension>
+	                    </nonFilteredFileExtensions>
+	                </configuration>
+	            </plugin>
+	        </plugins>
+	</build>
+	
+	<dependencies>
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<artifactId>demoiselle-jpa</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+		    <groupId>br.gov.frameworkdemoiselle</groupId>
+		    <artifactId>demoiselle-jta</artifactId>
+		    <scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-easymock</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.17</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle.component</groupId>
+			<artifactId>demoiselle-report</artifactId>
+			<version>2.0.3</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-faces</artifactId>
+            <version>2.0-SNAPSHOT</version>
+        </dependency>
+        
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>demoiselle.sourceforge.net-release</id>
+			<url>http://demoiselle.sourceforge.net/repository/release</url>
+		</repository>
+		
+		<repository>
+			<id>deluan.snapshots</id>
+			<name>Deluan's Public Snapshots Repository</name>
+			<url>http://deluan.googlecode.com/svn/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+	</repositories>
+	
+</project>

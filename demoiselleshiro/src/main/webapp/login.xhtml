@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+<h:head>
+	<title>Banco de Erros</title>
+</h:head>
+<body>
+	<p:panel style="width:400px; margin: 0 auto">
+		
+		<h:outputText value="#{loginMB.erro}" />
+	
+		<h:form id="myLoginForm"  prependId="false" >
+			<h:panelGrid columns="2">
+				<h:outputText value="Usuário: " />
+				<p:inputText id="username" value="#{loginMB.userlogin}" />
+				<h:outputText value="Senha:" />
+				<p:password id="password" feedback="false" value="#{loginMB.senha}" />
+			</h:panelGrid>
+			<p:commandButton ajax="false" value="Entrar" action="/login.jsf" />
+		</h:form>
+	</p:panel>
+</body>
+</html>

@@ -1,0 +1,9 @@
+#Wed Feb 29 13:10:59 GMT-03:00 2012
+activeProfiles=tomcat7
+eclipse.preferences.version=1
+fullBuildGoals=process-test-resources
+includeModules=false
+resolveWorkspaceProjects=true
+resourceFilterGoals=process-resources resources\:testResources
+skipCompilerPlugin=true
+version=1

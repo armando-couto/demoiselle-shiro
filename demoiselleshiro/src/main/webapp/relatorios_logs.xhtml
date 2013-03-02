@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+		<h:form prependId="false" id="formid">
+			<p:fieldset legend="Relatorio de Logs"
+				toggleable="false" style="width:500px;margin:0 auto;">
+				<h:panelGrid id="panelGridLogs" columns="4">
+						<h:outputLabel value="Sistema " />
+						<h:selectOneMenu value="#{relatoriosMB.sistema}" required="true" requiredMessage="Selecione"
+							valueChangeListener="#{relatoriosMB.sistemaSelectListener}">
+							<f:selectItem itemLabel="Selecione..." />
+							<f:selectItems value="#{sistemasListMB.resultList}" var="sistema"
+								itemLabel="#{sistema.codigo}" itemValue="#{sistema}" />
+							<p:ajax event="change" process="@this" update="panelGridLogs" />
+						</h:selectOneMenu>
+						<h:outputLabel value="Erro:  "  rendered="#{relatoriosMB.sistema != null}"/>
+						<h:selectOneMenu value="#{relatoriosMB.erro}" valueChangeListener="#{relatoriosMB.erroSelectListener}" rendered="#{relatoriosMB.sistema != null}" >
+							<f:selectItem itemLabel="Todos" />
+							<f:selectItems value="#{relatoriosMB.sistema.erros}" var="erro" 
+								itemLabel="#{erro.codigo}" itemValue="#{erro}" />
+						</h:selectOneMenu>
+						<h:outputLabel value="Data Inicio " rendered="#{relatoriosMB.sistema != null}" />
+						<p:calendar id="calendarDataInicio" rendered="#{relatoriosMB.sistema != null}"
+							value="#{relatoriosMB.dataInicio}" size="11"
+							maxdate="#{relatoriosMB.dataFim}"  pattern="dd/MM/yyyy"
+							selectListener="#{relatoriosMB.dataInicioListener}"
+							onSelectUpdate="calendarDataFim">
+						</p:calendar>
+						<h:outputLabel value="Data Fim "  rendered="#{relatoriosMB.sistema != null}"/>
+						<p:calendar id="calendarDataFim" value="#{relatoriosMB.dataFim}"
+							mindate="#{relatoriosMB.dataInicio}" pattern="dd/MM/yyyy"
+							selectListener="#{relatoriosMB.dataFimListener}" size="11"
+							onSelectUpdate="calendarDataInicio"  rendered="#{relatoriosMB.sistema != null}"/>
+						<p:commandButton ajax="false" value="Gerar"
+							 action="#{relatoriosMB.relatorioMaisConsultados}" rendered="#{relatoriosMB.sistema != null}"/>
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
+	</ui:define>
+</ui:composition>

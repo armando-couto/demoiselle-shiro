@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+			<h:form id="formListUsuarios">
+				<p:messages />
+				<p:dataTable id="list" var="bean"
+					style="width: 830px;margin: 0 auto;"
+					value="#{usuariosListMB.resultList}" >
+					<f:facet name="header"><h:outputText value="#{messages['usuarios.list.table.tittle']}" /></f:facet>
+					<p:column>
+						<f:facet name="header"><h:outputText value="#{messages['usuarios.list.table.header.username']}" /></f:facet>
+						<h:outputText value="#{bean.username}" />
+						<h:outputText value=" (#{messages['usuarios.list.emptyroles']})" rendered="#{empty bean.perfis}" style="color:red" />
+					</p:column>
+					<p:column style="width:120px; text-align: center">
+						<f:facet name="header"><h:outputText value="#{messages['table.actioncolumn']}" /></f:facet>
+						<p:commandButton ajax="false" title="Editar Usuário"
+							action="#{usuariosListMB.getNextView}" image="ui-icon-pencil"
+							actionListener="#{usuariosListMB.clear}">
+							<f:param name="id" value="#{bean.id}" />
+						</p:commandButton>
+						<p:commandButton ajax="false" title="Editar Permissões"
+							action="/usuarios_permissoes.jsf" image="ui-icon-flag"
+							actionListener="#{usuariosListMB.clear}">
+							<f:param name="id" value="#{bean.id}" />
+						</p:commandButton>
+						<p:commandButton  onclick="confirmation.show()" title="Deletar"  image="ui-icon-close" >
+							<f:setPropertyActionListener target="#{usuariosListMB.id_usuario}" value="#{bean.id}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+				
+				<p:confirmDialog id="confirmDialog" message="#{messages['confirm.delete']}" modal="true"  draggable="false"
+                header="Aviso" severity="alert" widgetVar="confirmation">  
+                  
+			        <p:commandButton id="confirm" value="#{messages['confirm.delete.yes']}" action="#{usuariosListMB.delete}"
+			        			 actionListener="#{usuariosListMB.clear}" oncomplete="confirmation.hide()"  
+			                     update="formListUsuarios" />  
+			        <p:commandButton id="decline" value="#{messages['confirm.delete.no']}" onclick="confirmation.hide()" type="button" />   
+			                  
+			    </p:confirmDialog>
+			</h:form>
+			
+	</ui:define>
+</ui:composition>

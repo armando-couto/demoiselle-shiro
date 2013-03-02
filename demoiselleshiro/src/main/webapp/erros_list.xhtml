@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+		<h:form prependId="false" id="formid">
+			<p:panel style="width:350px; margin: 0 auto;">
+				<h:panelGrid columns="3" id="selectSistema">
+					<h:outputLabel for="sistema"
+						value="#{messages['erros.list.selectsistemas']}" />
+					<h:selectOneMenu id="sistema" value="#{errosListMB.sistema}">
+						<f:selectItem itemValue="" itemLabel="Selecione..." />
+						<f:selectItems value="#{sistemasListMB.resultList}" var="sistema"
+							itemLabel="#{sistema.codigo}" itemValue="#{sistema}" />
+						<f:ajax execute="@this"
+							listener="#{errosListMB.sistemasValueChangeListener}"
+							event="change" render=":formListErros" />
+					</h:selectOneMenu>
+					<p:message for="sistema" />
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+		<p:messages />
+		<h:form id="formListErros">
+			<p:messages />
+			<p:dataTable id="list" var="bean" style="margin: 0 auto;width:80%"
+				value="#{errosListMB.sistema.erros}" widgetVar="errosList" rows="5" paginator="true" paginatorPosition="bottom"
+				rendered="#{not empty errosListMB.sistema.erros}"  >
+
+				<f:facet name="header">
+					<p:outputPanel>
+						<h:outputText value="Buscar por codigo: " />
+						<p:inputText id="globalFilter" onkeyup="errosList.filter()"
+							style="width:150px" />
+					</p:outputPanel>
+				</f:facet>
+				
+				<p:column style="width:30px;text-align:center;">
+					<f:facet name="header">
+						<h:outputText value="Sistema" />
+					</f:facet>
+					<h:outputText value="#{errosListMB.sistema.codigo}" />
+				</p:column>
+				<p:column style="width:50px;text-align:center;" filterBy="#{bean.codigo}" filterStyle="display:none" >
+					<f:facet name="header">
+						<h:outputText
+							value="#{messages['sistemas.list.table.header.code']}" />
+					</f:facet>
+					<h:outputText value="#{bean.codigo}" converter="codigoErroConveter" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText
+							value="#{messages['sistemas.list.table.header.description']}" />
+					</f:facet>
+					<h:outputText value="#{bean.descricao}" />
+				</p:column>
+				<p:column style="width:80px; text-align: center">
+					<f:facet name="header">
+						<h:outputText value="#{messages['table.actioncolumn']}" />
+					</f:facet>
+					<p:commandButton ajax="false" action="#{errosListMB.getNextView}"
+						image="ui-icon-pencil" actionListener="#{errosListMB.clear}">
+						<f:param name="parameterSistema" value="#{errosListMB.sistema.id}" />
+						<f:param name="id" value="#{bean.id}" />
+					</p:commandButton>
+					<p:commandButton title="#{messages['button.delete']}" onclick="confirmation.show()" image="ui-icon-close">
+						<f:setPropertyActionListener target="#{errosListMB.id_erros}"
+							value="#{bean.id}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			<p:panel
+				rendered="#{errosListMB.sistema == null || errosListMB.sistema != null and empty errosListMB.sistema.erros}">
+				<h:outputText value="Sistema não possui erros cadastrado"
+					rendered="#{empty errosListMB.sistema.erros and errosListMB.sistema != null}" />
+				<h:outputText value="Selecione o sistema"
+					rendered="#{errosListMB.sistema == null}" />
+			</p:panel>
+			
+			<p:confirmDialog id="confirmDialog"
+				message="#{messages['confirm.delete']}" modal="true"
+				draggable="false" header="Aviso" severity="alert"
+				widgetVar="confirmation">
+				<p:commandButton id="confirm"
+					value="#{messages['confirm.delete.yes']}"
+					action="#{errosListMB.delete}"
+					actionListener="#{errosListMB.clear}"
+					oncomplete="confirmation.hide()"
+					update="formListErros" />
+				<p:commandButton id="decline"
+					value="#{messages['confirm.delete.no']}"
+					onclick="confirmation.hide()" type="button" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

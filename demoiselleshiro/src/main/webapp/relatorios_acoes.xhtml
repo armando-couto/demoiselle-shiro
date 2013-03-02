@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+		<h:form prependId="false" id="formid">
+			<p:panel style="width:350px; margin: 0 auto;">
+				<h:panelGrid columns="3" id="selectSistema">
+					<h:outputLabel for="sistema"
+						value="#{messages['erros.list.selectsistemas']}" />
+					<h:selectOneMenu id="sistema" value="#{errosListMB.sistema}">
+						<f:selectItem itemValue="" itemLabel="Selecione..." />
+						<f:selectItems value="#{sistemasListMB.resultList}" var="sistema"
+							itemLabel="#{sistema.codigo}" itemValue="#{sistema}" />
+						<f:ajax execute="@this"
+							listener="#{errosListMB.sistemasValueChangeListener}"
+							event="change" render=":formListErros" />
+					</h:selectOneMenu>
+					<p:message for="sistema" />
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

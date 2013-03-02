@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.prime.com.tr/ui"> 
+
+<h:head>
+	<script type="text/javascript" src="teste.js"></script>
+	<script type="text/javascript" src="mascara_moeda.js"></script>
+</h:head> 
+<body> 
+
+	<h:form prependId="false">
+		<h:inputText id="meuTexto" label="tobeUpper" value="" />
+		<h:inputText id="meuTexto2" label="tobeUpper" value="1234" />
+		<h:inputText id="meuTexto3" label="tobeUpper" value="" onkeypress="reais(this,event,5);" />
+		<h:inputText id="meuTexto4" label="tobeUpper" value="" /> 
+		<p:commandButton value="enviar" action="#" />
+	</h:form>
+
+</body> 
+</html>

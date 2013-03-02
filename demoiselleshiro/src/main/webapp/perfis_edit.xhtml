@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+		<style>
+.alignTop td {
+	vertical-align: top;
+}
+</style>
+
+		<h:form id="formCadastroUsuario" prependId="false">
+
+			<p:fieldset legend="#{messages['perfis.edit.form.title']}"
+				toggleable="false" style="width:800px;margin:0 auto;">
+				<h:panelGrid columns="2">
+					<h:outputLabel value="#{messages['perfis.edit.label.perfil']}" />
+					<h:panelGroup>
+						<p:inputText id="perfil" value="#{perfisEditMB.bean.perfil}"  rendered="#{!perfisEditMB.updateMode}" />
+						<h:outputText value="#{perfisEditMB.bean.perfil}"  rendered="#{perfisEditMB.updateMode}" />
+						<p:message for="perfil" />
+					</h:panelGroup>
+					<p:commandButton action="#{perfisEditMB.insert}"  value="#{messages['perfis.edit.form.criar']}" rendered="#{!perfisEditMB.updateMode}"  update="formCadastroUsuario" />
+				</h:panelGrid>
+
+				<p:dataTable id='entidades' rendered="#{perfisEditMB.updateMode}"
+					value="#{perfisEditMB.listaEntidades}" var="entidade"
+					emptyMessage="#{messages['perfis.entity.empty']}">
+					<f:facet name="header">
+						<h:outputText value="#{usuariosPermissoesMB.selectedPefil.perfil}" />
+					</f:facet>
+					<p:column headerText="#{messages['perfis.edit.column.header.entidades']}"
+						style="width:150px;text-align: left">
+						<h:outputText value="#{entidade.nome}" />
+					</p:column>
+					<p:column headerText="#{messages['perfis.edit.column.header.permissoes']}">
+						<h:selectManyCheckbox value="#{entidade.permissoes}" converter="permissoesConverter">
+							<f:selectItems value="#{perfisEditMB.listaPermissoes}" var="permissoes"
+							itemLabel="#{permissoes.permissao}" itemValue="#{permissoes}" />
+						</h:selectManyCheckbox>
+					</p:column>
+
+				</p:dataTable>
+
+				<p:commandButton action="#{perfisEditMB.update}" value="#{messages['form.update']}"
+					ajax="false" rendered="#{perfisEditMB.updateMode}" />
+
+			</p:fieldset>
+		</h:form>
+	</ui:define>
+</ui:composition>

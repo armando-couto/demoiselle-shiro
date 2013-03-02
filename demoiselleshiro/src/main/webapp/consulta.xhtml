@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+		<h:form>
+			<p:panel>
+				<h:panelGrid columns="4" id="consultaPanelGrid"
+					styleClass="consultaPanelGrid">
+					<h:outputLabel for="consulta" value="#{messages['consulta.label']}" />
+					<p:inputMask id="consulta" mask="**** - 9999"
+						value="#{consultaMB.consulta}"
+						validator="#{consultaValidator.validateConsulta}" />
+					<p:commandButton action="#{consultaMB.consultar}"
+						image="ui-icon-search"	update="consultaPanelGrid panelResultConsulta" actionListener="#{consultaMB.clean}"  >
+					</p:commandButton>						
+					<p:message for="consulta" />
+				</h:panelGrid>
+			</p:panel>
+			
+			<br/>
+			
+			<p:panel header="Consulta" id="panelResultConsulta"
+				visible="#{consultaMB.erro != null}">
+				<h:panelGrid columns="2" rendered="#{consultaMB.erro != null}">
+					<h:outputLabel value="#{messages['consulta.result.code.sistema']}" />
+					<h:outputText value="#{consultaMB.sistema.codigo}" />
+					<h:outputLabel value="#{messages['consulta.result.code.erro']}" />
+					<h:outputText value="#{consultaMB.erro.codigo}"
+						converter="codigoErroConveter" />
+					<h:outputLabel value="#{messages['consulta.result.description']}" />
+					<h:outputText value="#{consultaMB.erro.descricao}" />
+					<h:outputLabel value="#{messages['consulta.result.reazon']}" />
+					<h:outputText value="#{consultaMB.erro.razao}"  escape="false"/>
+					<h:outputLabel value="#{messages['consulta.result.action']}" />
+					<h:outputText value="#{consultaMB.erro.acao}" escape="false" />
+					<h:outputLabel value="#{messages['consulta.result.observations']}" />
+					<h:outputText value="#{consultaMB.erro.observacoes}" />
+				</h:panelGrid>
+			</p:panel>
+			<p:panel header="Consulta" id="notFound"
+				visible="#{consultaMB.erro == null and consultaMB.consulta.length > 0}">
+				<h:outputText value="TESTE" />
+			</p:panel>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>

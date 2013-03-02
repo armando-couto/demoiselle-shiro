@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+		<style>
+.teste {
+	
+}
+
+.teste td {
+	vertical-align: top;
+}
+</style>
+		<br />
+		<p:fieldset legend="#{messages['sistemas.edit.title.form']}"
+			toggleable="false" style="width:600px;margin: 0 auto;"
+			styleClass="teste">
+			<h:form id="formCadastroSistemas" prependId="false"
+				style="display:inline;">
+
+				<h:inputHidden id="updatemode" value="#{sistemasEditMB.updateMode}"
+					rendered="false"    />
+				<h:panelGrid id="fields" columns="3">
+					<h:outputLabel value="#{messages['sistemas.edit.label.code']}: "
+						for="codigo" styleClass="text-input" />
+					<h:panelGroup>
+						<p:inputText id="codigo" value="#{sistemasEditMB.bean.codigo}"
+							size="5" title="#{messages['sistemas.edit.alt.code']}"
+							maxlength="4" validator="#{sistemasValidator.validateCode}"
+							required="true"
+							requiredMessage="#{validations['sistemas.code.required']}"
+							style="display:block;float:left;" />
+						<div style="display: inline; float: left;">
+							<p:message for="codigo" />
+						</div>
+					</h:panelGroup>
+					<span></span>
+
+					<h:outputLabel
+						value="#{messages['sistemas.edit.label.description']}: "
+						for="descricao" styleClass="text-input" />
+					<p:inputText id="descricao" size="60"
+						value="#{sistemasEditMB.bean.descricao}"
+						title="#{messages['sistemas.edit.alt.description']}"
+						required="true" validator="#{sistemasValidator.validateDescricao}"
+						requiredMessage="#{validations['sistemas.description.required']}" />
+					<h:panelGroup style="position:relative">
+						<div style="position: absolute; width: 300px;">
+							<p:message for="descricao" />
+						</div>
+					</h:panelGroup>
+
+					<h:outputLabel
+						value="#{messages['sistemas.edit.label.observation']}: "
+						for="observacoes" styleClass="text-input" />
+					<p:inputTextarea id="observacoes" cols="60" rows="5"
+						title="#{messages['sistemas.edit.alt.observation']}"
+						value="#{sistemasEditMB.bean.observacoes}" />
+					<p:message for="observacoes" />
+
+				</h:panelGrid>
+				<p:commandButton action="#{sistemasEditMB.insert}"
+					value="#{messages['form.insert']}" ajax="false"
+					style="float:left;margin: 5px 5px 3px 420px;"
+					rendered="#{!sistemasEditMB.updateMode}" />
+				<p:commandButton action="#{sistemasEditMB.update}"
+					value="#{messages['form.update']}" ajax="false"
+					style="float:left;margin: 5px 5px 3px 400px;"
+					rendered="#{sistemasEditMB.updateMode}"  />
+			
+				<p:commandButton style="float:left;margin: 5px 0 3px 0;"
+					action="/sistemas_list.jsf" value="Cancelar" ajax="false"
+					process="@this"  immediate="true" />
+			</h:form>
+		</p:fieldset>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/main.xhtml">
+
+	<ui:define name="body">
+	<style>
+	.alignTop td{
+		vertical-align:top;
+	}
+	</style>
+	
+		<h:form id="formCadastroUsuario" prependId="false">
+			<h:inputHidden id="updatemode" value="#{usuariosEditMB.updateMode}"
+					rendered="false"    />
+			<p:fieldset legend="#{messages['usuarios.edit.form.title']}"
+				toggleable="false" style="width:370px;margin:0 auto;">
+				<h:panelGrid id="fields" columns="3" styleClass="alignTop">
+					<h:outputLabel
+						value="#{messages['usuarios.edit.form.username.label']}: "
+						for="username" styleClass="text-input" />
+					<p:inputText id="username" value="#{usuariosEditMB.bean.username}"
+						title="#{messages['usuarios.edit.form.username.alt']}"
+						validator="#{usuarioValidator.validateUsername}" required="true"
+						requiredMessage="#{validations['usuarios.username.required']}" />
+					<h:panelGroup style="position:relative">
+						<div style="position: absolute; width: 300px;">
+							<p:message for="username" />
+						</div>
+					</h:panelGroup>
+
+					<h:outputLabel
+						value="#{messages['usuarios.edit.form.userlogin.label']}: "
+						for="userlogin" styleClass="text-input" />
+					<p:inputText id="userlogin"
+						value="#{usuariosEditMB.bean.userlogin}"
+						title="#{messages['usuarios.edit.form.userlogin.alt']}"
+						validator="#{usuarioValidator.validateUserlogin}" required="true"
+						requiredMessage="#{validations['usuarios.userlogin.required']}" />
+					<h:panelGroup style="position:relative">
+						<div style="position: absolute; width: 300px;">
+							<p:message for="userlogin" />
+						</div>
+					</h:panelGroup>
+
+					<h:outputLabel
+						value="#{messages['usuarios.edit.form.password.label']}: "
+						for="userpassword" styleClass="text-input" />
+					<p:password feedback="false" id="userpassword"
+						value="#{usuariosEditMB.password}"
+						title="#{messages['usuarios.edit.form.password.alt']}"
+						validator="#{usuarioValidator.validateUserpassword}"
+						required="#{(usuariosEditMB.updateMode)? false : true}"
+						requiredMessage="#{validations['usuarios.userpassword.required']}" />
+					<h:panelGroup style="position:relative">
+						<div style="position: absolute; width: 300px;">
+							<p:message for="userpassword" />
+						</div>
+					</h:panelGroup>
+
+					<h:outputLabel
+						value="#{messages['usuarios.edit.form.passwordconfirm.label']}: "
+						for="userpasswordconfirm" styleClass="text-input" />
+					<p:password feedback="false" id="userpasswordconfirm"
+						value="#{usuariosEditMB.confirmpassword}"
+						title="#{messages['usuarios.edit.form.passwordconfirm.alt']}"
+						validator="#{usuarioValidator.validatePasswordConfirm}"
+						required="#{(usuariosEditMB.updateMode)? false : true}"
+						requiredMessage="#{validations['usuarios.passwordconfirm.required']}" />
+					<h:panelGroup style="position:relative">
+						<div style="position: absolute; width: 300px;">
+							<p:message for="userpasswordconfirm" />
+						</div>
+					</h:panelGroup>
+
+					
+				</h:panelGrid>
+				<p:commandButton action="#{usuariosEditMB.insert}" value="#{messages['form.insert']}"
+					ajax="false" rendered="#{!usuariosEditMB.updateMode}" />
+					<p:commandButton action="#{usuariosEditMB.update}" value="#{messages['form.update']}"
+					ajax="false" rendered="#{usuariosEditMB.updateMode}" />
+			</p:fieldset>
+		</h:form>
+	</ui:define>
+</ui:composition>
