@@ -20,7 +20,7 @@
 	</parent>
 	
 	<properties>
-		<shiro.version>2.0.1</shiro.version>
+		<shiro.version>2.0.2</shiro.version>
 	</properties>
 	
 	 <build>
